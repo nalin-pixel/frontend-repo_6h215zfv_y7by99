@@ -1,28 +1,35 @@
-import { useState } from 'react'
+import React from 'react';
+import Hero from './components/Hero';
+import Couple from './components/Couple';
+import Details from './components/Details';
+import RSVP from './components/RSVP';
+import Footer from './components/Footer';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <div className="min-h-screen bg-white text-gray-900">
+      <header className="sticky top-0 z-50 border-b border-rose-100 bg-white/80 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <a href="#home" className="font-serif text-2xl text-rose-600">A & F</a>
+          <nav className="hidden gap-6 text-sm text-gray-700 sm:flex">
+            <a href="#couple" className="hover:text-rose-600">Kisah</a>
+            <a href="#details" className="hover:text-rose-600">Detail</a>
+            <a href="#rsvp" className="hover:text-rose-600">RSVP</a>
+          </nav>
+          <a href="#rsvp" className="rounded-full bg-rose-600 px-4 py-2 text-sm text-white shadow hover:bg-rose-700">Konfirmasi</a>
         </div>
-      </div>
-    </div>
-  )
-}
+      </header>
 
-export default App
+      <main>
+        <Hero />
+        <Couple />
+        <Details />
+        <RSVP />
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default App;

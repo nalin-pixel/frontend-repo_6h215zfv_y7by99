@@ -1,9 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Heart } from 'lucide-react';
 import Spline from '@splinetool/react-spline';
 import { motion } from 'framer-motion';
 
+const Countdown = ({ targetDate }) => {
+  const calculate = () => {
+    const now = new Date().getTime();
+    const distance = targetDate.getTime() - now;
+    const days = Math.max(0, Math.floor(distance / (1000 * 60 * 60 * 24)));
+    const hours = Math.max(0, Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+    const minutes = Math.max(0, Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+    const seconds = Math.max(0, Math.floor((distance % (1000 * 60)) / 1000));
+    return { days, hours, minutes, seconds };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculate());
+
+  useEffect(() => {
+    const interval = setInterval(() => setTimeLeft(calculate()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const items = useMemo(() => [
+    { label: 'Hari', value: timeLeft.days },
+    { label: 'Jam', value: timeLeft.hours },
+    { label: 'Menit', value: timeLeft.minutes },
+    { label: 'Detik', value: timeLeft.seconds },
+  ], [timeLeft]);
+
+  return (
+    <div className="mt-8 grid grid-flow-col gap-4 rounded-2xl bg-white/80 p-4 backdrop-blur">
+      {items.map((it) => (
+        <div key={it.label} className="flex flex-col items-center">
+          <div className="font-serif text-3xl text-rose-600">{String(it.value).padStart(2, '0')}</div>
+          <div className="text-xs uppercase tracking-wide text-gray-500">{it.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const Hero = () => {
+  const eventDate = useMemo(() => new Date('2025-01-12T09:00:00+07:00'), []);
+
   return (
     <section id="home" className="relative h-[90vh] w-full overflow-hidden">
       <div className="absolute inset-0">
@@ -48,7 +87,15 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.3 }}
+          transition={{ duration: 0.9, delay: 0.25 }}
+        >
+          <Countdown targetDate={eventDate} />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.35 }}
           className="mt-8 flex flex-wrap items-center justify-center gap-4"
         >
           <a href="#rsvp" className="rounded-full bg-rose-600 px-6 py-3 text-white shadow hover:bg-rose-700 transition-colors">Konfirmasi Kehadiran</a>

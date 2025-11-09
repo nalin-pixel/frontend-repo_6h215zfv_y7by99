@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from './components/Hero';
 import Couple from './components/Couple';
 import Details from './components/Details';
+import Countdown from './components/Countdown';
 import RSVP from './components/RSVP';
 import Footer from './components/Footer';
 
@@ -24,6 +25,7 @@ const App = () => {
         <Hero />
         <Couple />
         <Details />
+        <Countdown />
         <RSVP />
       </main>
 
